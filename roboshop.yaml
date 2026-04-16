@@ -32,9 +32,21 @@
       amazon.aws.route53:
         state: present
         zone: "{{ domain_name }}"
-        record: "{{ item.item }}.{{ env }}.{{ domain_name }}"  #mongodb.dev.zenvyproducts.online
+        record: "{{ item.item }}.{{ env }}.{{ domain_name }}"  #mongodb.dev.zenvyproducts.online , frontend.dev.zenvyproducts.online
         type: A
         ttl: 1
         value: "{{ item.instances[0].private_ip_address }}"
         wait: true
       loop: "{{ ec2_output.results }}"
+
+    - name: create r53 record
+      amazon.aws.route53:
+        state: present
+        zone: "{{ domain_name }}"
+        record: "roboshop-{{ env }}.{{ domain_name }}"  #roboshop.dev.zenvyproducts.online ,
+        type: A
+        ttl: 1
+        value: "{{ item.instances[0].public_ip_address }}"
+        wait: true
+      loop: "{{ ec2_output.results }}"
+      when: item.item == "frontend"
