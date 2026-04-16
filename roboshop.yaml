@@ -4,7 +4,7 @@
   vars:
     sg_id: "sg-009a1cf6c0bb3b31b"
     ami_id: "ami-0220d79f3f480ecf5"
-    environment: "dev"
+    env: "dev"
     instances:
     - mongodb
     - catalogue
@@ -13,12 +13,12 @@
     amazon.aws.ec2_instance:
       instance_type: "t2.micro"
       image_id: "{{ ami_id }}"
-      name: "{{ item }}-{{ environment }}"
+      name: "{{ item }}-{{ env }}"
       tags:
         project: "roboshop"
         component: "{{ item }}"
-        Environment: "{{ environment }}"
-        Name: "{{ item }}-{{ environment }}"
+        Environment: "{{ env }}"
+        Name: "{{ item }}-{{ env }}"
   loop: "{{ instances }}"
   register: ec2_output
 
