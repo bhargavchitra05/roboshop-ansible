@@ -2,12 +2,12 @@
   hosts: all
   connection: local
   vars:
-    sg_id: "sg-009a1cf6c0bb3b31b"
-    ami_id: "ami-0220d79f3f480ecf5"
-    env: "dev"
-    instances:
-    - mongodb
-    - catalogue
+     sg_id: "sg-009a1cf6c0bb3b31b"
+     ami_id: "ami-0220d79f3f480ecf5"
+     env: "dev"
+     instances:
+     - mongodb
+     - catalogue
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
@@ -22,6 +22,6 @@
     loop: "{{ instances }}"
     register: ec2_output
 
-- name: print the output
+  - name: print the output
   ansible.builtin.debug:
       msg: "{{ ec2_output }}" 
